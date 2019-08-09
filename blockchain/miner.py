@@ -8,7 +8,8 @@ from uuid import uuid4
 from timeit import default_timer as timer
 
 import random
-
+import json
+import math
 
 def proof_of_work(last_proof):
     """
@@ -18,12 +19,15 @@ def proof_of_work(last_proof):
     - IE:  last_hash: ...999123456, new hash 123456888...
     - p is the previous proof, and p' is the new proof
     """
+    last_proof_string = json.dumps(last_proof, sort_keys=True).encode()
 
     start = timer()
 
     print("Searching for next proof")
-    proof = 0
-    #  TODO: Your code here
+    proof = random.randint(-999999999999999999999999,99999999999999999999999)
+    while valid_proof(last_proof_string, proof) is False:
+        proof = random.randint(-999999999999999999999999,99999999999999999999999)
+        # proof += 1
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
@@ -36,9 +40,11 @@ def valid_proof(last_hash, proof):
 
     IE:  last_hash: ...999123456, new hash 123456888...
     """
-
     # TODO: Your code here!
-    pass
+    guess = f'{last_hash}{proof}'.encode()
+    guess_hash = hashlib.sha256(guess).hexdigest()
+    return guess_hash[:6] == last_hash[-6:]
+    
 
 
 if __name__ == '__main__':
@@ -79,3 +85,4 @@ if __name__ == '__main__':
             print("Total coins mined: " + str(coins_mined))
         else:
             print(data.get('message'))
+
