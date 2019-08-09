@@ -28,7 +28,6 @@ def proof_of_work(last_proof):
     while valid_proof(last_proof_string, proof) is False:
         proof = random.randint(-sys.maxsize,sys.maxsize)
         # proof += 1
-        print(proof)
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
@@ -44,7 +43,7 @@ def valid_proof(last_hash, proof):
     # TODO: Your code here!
     guess = f'{last_hash}{proof}'.encode()
     guess_hash = hashlib.sha256(guess).hexdigest()
-    return guess_hash[:1] == last_hash[-1:]
+    return guess_hash[:6] == last_hash[-6:]
     
 
 
