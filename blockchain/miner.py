@@ -24,9 +24,9 @@ def proof_of_work(last_proof):
     start = timer()
 
     print("Searching for next proof")
-    proof = 0
+    proof = random.randint(-999999999999999999999999,99999999999999999999999)
     while valid_proof(last_proof_string, proof) is False:
-        proof = random.randint(-sys.maxsize,sys.maxsize)
+        proof = random.randint(-999999999999999999999999,99999999999999999999999)
         # proof += 1
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
